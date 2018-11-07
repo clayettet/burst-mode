@@ -32,12 +32,11 @@ public class changeText : MonoBehaviour
         {
             if (e.keyCode.ToString() == LetterToWrite) //if letter typed is correct
             {
-                DisplayedText.text = "Good job";
                 LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)];
                 DisplayedText.text = LetterToWrite;
             } else
             {
-                GetComponent<CameraShake>().ShakeCamera(20f, 1f);
+                //camera shake
                 //sound
             }
         }
