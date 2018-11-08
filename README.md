@@ -2,4 +2,4 @@
 
 Type as fast as possible with your keyboard... wil you handle the burst mode?
 
-### Currently under active development
+### /!\ Currently under active development /!\
