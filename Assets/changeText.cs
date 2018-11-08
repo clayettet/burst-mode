@@ -29,6 +29,9 @@ public class changeText : MonoBehaviour
     public Text DisplayedTime;
     public CameraShake CameraShake;
 
+    [Header("Sounds")]
+    public AudioSource wrong;
+
     private string LetterToWrite;
     private string[] Alphabet = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
     private List<KeyCode> keys = new List<KeyCode>();
@@ -72,8 +75,8 @@ public class changeText : MonoBehaviour
                         }
                         else
                         {
-                            CameraShake.Shake();
-                            //TODO add error sound
+                            CameraShake.Shake(); //shake camera
+                            wrong.Play(); //play a 'wrong'sound
                         }
                     }
                 }
