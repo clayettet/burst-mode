@@ -19,9 +19,13 @@ public class changeText : MonoBehaviour
     public float BumpMagnitude;
     public Color BumpColor;
 
+    [Header("Gameplay")]
+    public float TimeLeft;
+
     [Header("UI")]
     public Text DisplayedText;
     public Text DisplayedScore;
+    public Text DisplayedTime;
     public CameraShake CameraShake;
 
     private string LetterToWrite;
@@ -43,7 +47,10 @@ public class changeText : MonoBehaviour
 
     void Update()
     {
-        if (!InputBlocked && Input.anyKeyDown) // if a key is pressed
+        TimeLeft = TimeLeft - Time.deltaTime;   //time manager
+        DisplayedTime.text = TimeLeft.ToString("F2");
+
+        if (!InputBlocked && Input.anyKeyDown)  // if a key is pressed
         {
             string pressed = GetKeyPressed();
             if (!string.IsNullOrEmpty(pressed))
