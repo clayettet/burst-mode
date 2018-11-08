@@ -21,6 +21,7 @@ public class changeText : MonoBehaviour
 
     [Header("Gameplay")]
     public float TimeLeft;
+    private bool GameFinished = false;
 
     [Header("UI")]
     public Text DisplayedText;
@@ -40,43 +41,49 @@ public class changeText : MonoBehaviour
         {
             keys.Add((KeyCode)i);
         }
-        Score = 0;
-        LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)];
-        StartCoroutine(DisplayLetter(LetterToWrite));
+        Score = 0; //init score
+        StartCoroutine(OnBeginGame()); //start countdown and game
     }
 
     void Update()
     {
-        TimeLeft = TimeLeft - Time.deltaTime;   //time manager
-        DisplayedTime.text = TimeLeft.ToString("F2");
-
-        if (!InputBlocked && Input.anyKeyDown)  // if a key is pressed
+        if (!GameFinished)
         {
-            string pressed = GetKeyPressed();
-            if (!string.IsNullOrEmpty(pressed))
+            if (TimeLeft <= 0.0f)
             {
-                if (GetKeyPressed().Equals(LetterToWrite))
+                GameFinished = true;
+                StartCoroutine(OnEndGame());                
+            }
+            else
+            {
+                TimeLeft = Mathf.Clamp(TimeLeft - Time.deltaTime, 0.0f, float.MaxValue);   //time manager
+                DisplayedTime.text = TimeLeft.ToString("F2");
+                if (!InputBlocked && Input.anyKeyDown)  // if a key is pressed
                 {
-                    LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)];
-                    StartCoroutine(DisplayLetter(LetterToWrite));
-                    Score++;
-                    StartCoroutine(UpdateScoreUI());
+                    string pressed = GetKeyPressed();
+                    if (!string.IsNullOrEmpty(pressed))
+                    {
+                        if (GetKeyPressed().Equals(LetterToWrite))
+                        {
+                            LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)];
+                            StartCoroutine(DisplayMiddleScreen(LetterToWrite));
+                            Score++;
+                            StartCoroutine(UpdateScoreUI());
+                        }
+                        else
+                        {
+                            CameraShake.Shake();
+                            //TODO add error sound
+                        }
+                    }
                 }
-                else
-                {
-                    CameraShake.Shake();
-                    //TODO add error sound
-                }
-
             }
         }
-        
     }
 
     
      private IEnumerator UpdateScoreUI()
      {
-        // TODO: animation
         BumpElapsed = 0.0f;
         Vector3 bumpedScale = new Vector3(BumpMagnitude, BumpMagnitude, 0.0f);
         Vector3 minScale = new Vector3(1.0f, 1.0f, 1.0f);
@@ -92,12 +99,11 @@ public class changeText : MonoBehaviour
             DisplayedScore.color = Color.Lerp(Color.white, BumpColor, value);
 
         }
-
         yield return null;
      }
 
 
-    private IEnumerator DisplayLetter(string letter)
+    private IEnumerator DisplayMiddleScreen(string letter)
     {
         InputBlocked = true;
         DisplayedText.text = letter;
@@ -116,7 +122,34 @@ public class changeText : MonoBehaviour
         InputBlocked = false;
     }
 
-    private string GetKeyPressed()
+    private IEnumerator OnBeginGame()
+    {
+        //TODO add sound for 3 2 1 Go
+        InputBlocked = true; //block input
+        DisplayedTime.enabled = false; // hide time
+        StartCoroutine(DisplayMiddleScreen("3"));
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine(DisplayMiddleScreen("2"));
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine(DisplayMiddleScreen("1"));
+        yield return new WaitForSeconds(1.0f);
+        StartCoroutine(DisplayMiddleScreen("Go!"));
+        yield return new WaitForSeconds(0.7f);
+        DisplayedTime.enabled = true; //display timer
+        InputBlocked = false;
+        LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)]; //init first letter
+        StartCoroutine(DisplayMiddleScreen(LetterToWrite)); //begin game
+    }
+
+    private IEnumerator OnEndGame()
+    {
+        DisplayedScore.enabled = false;
+        StartCoroutine(DisplayMiddleScreen("Game finished!"));
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(DisplayMiddleScreen("You scored " + Score));
+    }
+
+    private string GetKeyPressed() // return the current key pressed in string format
     {
         for (int i = 0; i < keys.Count; i++)
         { //for each letter key
