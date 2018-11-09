@@ -2,6 +2,9 @@
 
 Type as fast as possible with your keyboard... BURST MODE!
 
+## How to play?
+Just launch *BurstMode.exe* in the release/ folder.
+
 ## About
 
 *Burst Mode* was created in 2 days as a first Unity project.
