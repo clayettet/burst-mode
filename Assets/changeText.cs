@@ -26,17 +26,19 @@ public class changeText : MonoBehaviour
     private float TimeLeft; //amount of time remaining during game
     private bool GameFinished = false;
 
+    [Header("Sounds")]
+    public AudioClip wrong;
+    public AudioClip correct;
+
     [Header("UI")]
     public Text DisplayedText;
     public Text DisplayedScore;
     public Text DisplayedTime;
     public Text DisplayedDownText;
     private int BestScore;
-    public Text DisplayedBestScore;
+    private Text DisplayedBestScore;
     public CameraShake CameraShake;
 
-    [Header("Sounds")]
-    public AudioClip wrong;
 
     private string LetterToWrite;
     private string[] Alphabet = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -81,6 +83,7 @@ public class changeText : MonoBehaviour
                     {
                         if (GetKeyPressed().Equals(LetterToWrite))
                         {
+                            PlaySound(correct);
                             LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)];
                             StartCoroutine(DisplayMiddleScreen(LetterToWrite));
                             Score++;
