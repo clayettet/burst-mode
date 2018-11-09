@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class changeText : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class changeText : MonoBehaviour
     public Text DisplayedScore;
     public Text DisplayedTime;
     public Text DisplayedDownText;
+    private int BestScore;
+    public Text DisplayedBestScore;
     public CameraShake CameraShake;
 
     [Header("Sounds")]
@@ -43,6 +46,7 @@ public class changeText : MonoBehaviour
 
     void Start()
     {
+        BestScore = PlayerPrefs.GetInt("Best Score", 0); //init best score
         for (int i = (int)KeyCode.A; i <= (int)KeyCode.Z; i++) //init tab with A-->Z keyCodes
         {
             keys.Add((KeyCode)i);
@@ -171,7 +175,15 @@ public class changeText : MonoBehaviour
         DisplayedScore.enabled = false;
         StartCoroutine(DisplayMiddleScreen("Game Finished!"));
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine(DisplayMiddleScreen("You scored " + Score));
+        if (Score > BestScore) //if best score
+        {
+            BestScore = Score;
+            PlayerPrefs.SetInt("Best Score", Score);
+            StartCoroutine(DisplayMiddleScreen("You scored " + Score + " (PB)"));
+        } else
+        {
+            StartCoroutine(DisplayMiddleScreen("You scored " + Score));
+        }
         yield return new WaitForSeconds(0.5f);
         DisplayedDownText.enabled = true;
     }

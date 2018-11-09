@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public enum Menus
 {
     MainMenu,
-    GameScene,
-    Credit
+    GameScene
 }
 
 public class MenuManager : MonoBehaviour {
@@ -19,7 +18,8 @@ public class MenuManager : MonoBehaviour {
     public Button PlayButton, ExitButton;
     public GameObject Menu;
     public GameObject TimerGame;
-    public GameObject Ranking;
+
+    public Text BestScore;
 
     private void Awake()
     {
@@ -38,17 +38,16 @@ public class MenuManager : MonoBehaviour {
     void Start () {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update () {
+        BestScore.text = PlayerPrefs.GetInt("Best Score", 0).ToString();
+    }
 
     public void DisplayMenu(Menus m)
     {
         Menu.SetActive(m == Menus.MainMenu);
         TimerGame.SetActive(m == Menus.GameScene);
-        //CreditMenu.SetActive(m == Menus.Ranking);
     }
 
     public void OnPlayButtonClicked()
