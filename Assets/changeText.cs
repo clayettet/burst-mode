@@ -55,6 +55,7 @@ public class changeText : MonoBehaviour
         MenuManager.Instance.DisplayMenu(Menus.GameScene);
         Pause = false;
         StartCoroutine(ResetGame());
+
     }
 
     void Update()
@@ -89,12 +90,6 @@ public class changeText : MonoBehaviour
                     }
                 }
             }
-            /*
-            if (Input.GetKey(KeyCode.Escape))
-            {
-                GameFinished = true;
-                MenuManager.Instance.DisplayMenu(Menus.MainMenu);
-            }*/
         }
         else //if game finished
         {
@@ -102,6 +97,12 @@ public class changeText : MonoBehaviour
             {
                 StartCoroutine(ResetGame());
             }
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameFinished = true;
+            StopAllCoroutines();
+            MenuManager.Instance.DisplayMenu(Menus.MainMenu);
         }
     }
 
@@ -168,7 +169,7 @@ public class changeText : MonoBehaviour
     private IEnumerator OnEndGame()
     {
         DisplayedScore.enabled = false;
-        StartCoroutine(DisplayMiddleScreen("Game finished!"));
+        StartCoroutine(DisplayMiddleScreen("Game Finished!"));
         yield return new WaitForSeconds(1.5f);
         StartCoroutine(DisplayMiddleScreen("You scored " + Score));
         yield return new WaitForSeconds(0.5f);
