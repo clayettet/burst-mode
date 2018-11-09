@@ -1,4 +1,4 @@
-# Burst Mode (currently under active development)
+# Burst Mode
 
 Type as fast as possible with your keyboard... BURST MODE!
 
