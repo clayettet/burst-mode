@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class changeText : MonoBehaviour
 {
     private int Score;
+    public bool Pause;
 
     [Header("Rise In Animation")]
     public AnimationCurve RiseInAnimationCurve;
@@ -20,17 +21,19 @@ public class changeText : MonoBehaviour
     public Color BumpColor;
 
     [Header("Gameplay")]
-    public float TimeLeft;
+    public float TimeOfAGame; //amount a time at the beginning of a game (add +4sec to counter countdown)
+    private float TimeLeft; //amount of time remaining during game
     private bool GameFinished = false;
 
     [Header("UI")]
     public Text DisplayedText;
     public Text DisplayedScore;
     public Text DisplayedTime;
+    public Text DisplayedDownText;
     public CameraShake CameraShake;
 
     [Header("Sounds")]
-    public AudioSource wrong;
+    public AudioClip wrong;
 
     private string LetterToWrite;
     private string[] Alphabet = new string[26] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
@@ -44,20 +47,25 @@ public class changeText : MonoBehaviour
         {
             keys.Add((KeyCode)i);
         }
-        Score = 0; //init score
-        StartCoroutine(OnBeginGame()); //start countdown and game
+        
+    }
+
+    public void LaunchGame()
+    {
+        MenuManager.Instance.DisplayMenu(Menus.GameScene);
+        Pause = false;
+        StartCoroutine(ResetGame());
     }
 
     void Update()
     {
-        if (!GameFinished)
+        if (!GameFinished && !Pause)
         {
             if (TimeLeft <= 0.0f)
             {
                 GameFinished = true;
                 StartCoroutine(OnEndGame());                
-            }
-            else
+            } else
             {
                 TimeLeft = Mathf.Clamp(TimeLeft - Time.deltaTime, 0.0f, float.MaxValue);   //time manager
                 DisplayedTime.text = TimeLeft.ToString("F2");
@@ -76,10 +84,23 @@ public class changeText : MonoBehaviour
                         else
                         {
                             CameraShake.Shake(); //shake camera
-                            wrong.Play(); //play a 'wrong'sound
+                            PlaySound(wrong);
                         }
                     }
                 }
+            }
+            /*
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                GameFinished = true;
+                MenuManager.Instance.DisplayMenu(Menus.MainMenu);
+            }*/
+        }
+        else //if game finished
+        {
+            if (Input.GetKey(KeyCode.Space)) //press space to reset game
+            {
+                StartCoroutine(ResetGame());
             }
         }
     }
@@ -150,6 +171,28 @@ public class changeText : MonoBehaviour
         StartCoroutine(DisplayMiddleScreen("Game finished!"));
         yield return new WaitForSeconds(1.5f);
         StartCoroutine(DisplayMiddleScreen("You scored " + Score));
+        yield return new WaitForSeconds(0.5f);
+        DisplayedDownText.enabled = true;
+    }
+
+    private IEnumerator ResetGame()
+    {
+        DisplayedDownText.enabled = false;
+        GameFinished = false;
+        Score = 0; //reset score and time
+        DisplayedScore.text = 0.ToString();
+        TimeLeft = TimeOfAGame;
+        DisplayedScore.enabled = true;
+        yield return StartCoroutine(OnBeginGame());
+    }
+
+    public static void PlaySound(AudioClip clip)
+    {
+        GameObject Go = new GameObject();
+        AudioSource audioSource = Go.AddComponent < AudioSource>();
+        audioSource.clip = clip;
+        audioSource.Play();
+        GameObject.Destroy(Go, audioSource.clip.length + 0.1f);
     }
 
     private string GetKeyPressed() // return the current key pressed in string format
