@@ -1,6 +1,6 @@
 # Burst Mode (currently under active development)
 
-Type as fast as possible with your keyboard... wil you handle the burst mode?
+Type as fast as possible with your keyboard... BURST MODE!
 
 ![Menu](https://github.com/clayettet/burst-mode/blob/master/previ_menu.png)
 
