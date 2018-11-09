@@ -9,7 +9,7 @@ Special thanks to [Thibaut MAGNIER](https://github.com/tmagnier) who helped me w
 
 ## Some screenshots
 
-![Menu](https://github.com/clayettet/burst-mode/blob/master/previ_menu.png)
+![Menu](https://github.com/clayettet/burst-mode/blob/master/previ_firstscreen.png)
 
 ![Game](https://github.com/clayettet/burst-mode/blob/master/previ_game.png)
 
