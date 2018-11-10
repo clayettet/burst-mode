@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public AudioClip clip;
+public class AudioMouseOver : MonoBehaviour, IPointerEnterHandler
+{
 
-public class AudioMouseOver : MonoBehaviour {
+    public AudioClip clip;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -17,9 +19,11 @@ public class AudioMouseOver : MonoBehaviour {
 		
 	}
 
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         PlaySound(clip);
+        Debug.Log(Time.time);
     }
 
     public static void PlaySound(AudioClip clip)

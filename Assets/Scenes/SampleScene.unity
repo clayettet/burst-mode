@@ -625,6 +625,7 @@ GameObject:
   - component: {fileID: 737858662}
   - component: {fileID: 737858661}
   - component: {fileID: 737858660}
+  - component: {fileID: 737858663}
   m_Layer: 5
   m_Name: Exit Game
   m_TagString: Untagged
@@ -737,6 +738,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 737858658}
   m_CullTransparentMesh: 0
+--- !u!114 &737858663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 737858658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1abcfe4e0c9b4428643f4eb817ea8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 0f755454f4c9d8b418ac31aa3bb06a3a, type: 3}
 --- !u!1 &771032856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,9 +1334,11 @@ MonoBehaviour:
   BumpDuration: 0.2
   BumpMagnitude: 0.3
   BumpColor: {r: 0.5058824, g: 0.78039217, b: 0.5176471, a: 1}
-  TimeOfAGame: 34
+  TimeOfAGame: 33
   wrong: {fileID: 8300000, guid: d4987438e06428e46b5c9b16167ade32, type: 3}
   correct: {fileID: 8300000, guid: 098a8bf2595f88746acb425723124da3, type: 3}
+  countdown: {fileID: 8300000, guid: 9ec2fa9419c299d4ca0cfc09c2dd3ca0, type: 3}
+  end: {fileID: 8300000, guid: 00874135882bf354b9a3008aa7fec414, type: 3}
   DisplayedText: {fileID: 797370588}
   DisplayedScore: {fileID: 771032858}
   DisplayedTime: {fileID: 2129067308}
@@ -1632,6 +1647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a1abcfe4e0c9b4428643f4eb817ea8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 0f755454f4c9d8b418ac31aa3bb06a3a, type: 3}
 --- !u!1 &1935145236
 GameObject:
   m_ObjectHideFlags: 0

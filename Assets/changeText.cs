@@ -22,13 +22,15 @@ public class changeText : MonoBehaviour
     public Color BumpColor;
 
     [Header("Gameplay")]
-    public float TimeOfAGame; //amount a time at the beginning of a game (add +4sec to counter countdown)
+    public float TimeOfAGame; //amount a time at the beginning of a game (add +3sec to counter countdown)
     private float TimeLeft; //amount of time remaining during game
     private bool GameFinished = false;
 
     [Header("Sounds")]
     public AudioClip wrong;
     public AudioClip correct;
+    public AudioClip countdown;
+    public AudioClip end;
 
     [Header("UI")]
     public Text DisplayedText;
@@ -159,14 +161,13 @@ public class changeText : MonoBehaviour
         //TODO add sound for 3 2 1 Go
         InputBlocked = true; //block input
         DisplayedTime.enabled = false; // hide time
+        PlaySound(countdown);
         StartCoroutine(DisplayMiddleScreen("3"));
         yield return new WaitForSeconds(1.0f);
         StartCoroutine(DisplayMiddleScreen("2"));
         yield return new WaitForSeconds(1.0f);
         StartCoroutine(DisplayMiddleScreen("1"));
         yield return new WaitForSeconds(1.0f);
-        StartCoroutine(DisplayMiddleScreen("Go!"));
-        yield return new WaitForSeconds(0.7f);
         DisplayedTime.enabled = true; //display timer
         InputBlocked = false;
         LetterToWrite = Alphabet[Random.Range(0, Alphabet.Length)]; //init first letter
@@ -175,6 +176,7 @@ public class changeText : MonoBehaviour
 
     private IEnumerator OnEndGame()
     {
+        PlaySound(end);
         DisplayedScore.enabled = false;
         StartCoroutine(DisplayMiddleScreen("Game Finished!"));
         yield return new WaitForSeconds(1.5f);
