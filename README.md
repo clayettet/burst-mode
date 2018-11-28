@@ -12,10 +12,10 @@ Special thanks to [Thibaut MAGNIER](https://github.com/tmagnier) who helped me w
 
 ## Some screenshots
 
-![Menu](https://github.com/clayettet/burst-mode/blob/master/previ_firstscreen.png)
+![Menu](https://github.com/clayettet/burst-mode/blob/master/prev_menu.gif)
 
-![Game](https://github.com/clayettet/burst-mode/blob/master/previ_game.png)
+![Game](https://github.com/clayettet/burst-mode/blob/master/prev_begin.gif)
 
-![Game ended](https://github.com/clayettet/burst-mode/blob/master/previ_finished.PNG)
+![Game ended](https://github.com/clayettet/burst-mode/blob/master/prev_end.gif)
 
 
